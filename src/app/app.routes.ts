@@ -16,6 +16,10 @@ export const routes: Routes = [
     loadComponent: () => import('./inicio-sesion/login/login.page').then( m => m.LoginPage)
   },
   {
+    path: 'registro',
+    loadComponent: () => import('./inicio-sesion/registro/registro.page').then( m => m.RegistroPage)
+  },
+  {
     path: 'olvido-contrasena', component: OlvidoContrasenaComponent
   },
   {
@@ -40,9 +44,6 @@ export const routes: Routes = [
     path: '**',
     redirectTo: 'home',
     pathMatch: 'full',
-  },  {
-    path: 'registro',
-    loadComponent: () => import('./inicio-sesion/registro/registro.page').then( m => m.RegistroPage)
   }
 
 

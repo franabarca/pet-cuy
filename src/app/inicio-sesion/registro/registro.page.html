@@ -4,10 +4,59 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">registro</ion-title>
-    </ion-toolbar>
-  </ion-header>
+<ion-content>
+  <form [formGroup]="registerForm" (ngSubmit)="submitForm()" novalidate>
+    <ion-item lines="full">
+      <ion-label position="floating">Rut</ion-label>
+      <ion-input formControlName="rut" type="text"></ion-input>
+    </ion-item>
+    <span class="error ion-padding" *ngIf="isSubmitted && errorControl.rut.errors.required">
+      Ingrese un rut.
+    </span>
+    <span class="error ion-padding" *ngIf="isSubmitted && errorControl.rut.errors.maxLength">
+      Por favor, ingrese un rut valido.
+    </span>
+    <span class="error ion-padding" *ngIf="isSubmitted && errorControl.rut.errors.minLength">
+      Por favor, ingrese un rut valido.
+    </span>
+    <ion-item lines="full">
+      <ion-label position="floating">Nombre</ion-label>
+      <ion-input formControlName="nombre" type="text"></ion-input>
+    </ion-item>
+    <span class="error ion-padding" *ngIf="isSubmitted && errorControl.nombre.errors.required">
+      Ingrese un nombre.
+    </span>
+    <ion-item lines="full">
+      <ion-label position="floating">Apellido</ion-label>
+      <ion-input formControlName="apellido" type="text"></ion-input>
+    </ion-item>
+    <span class="error ion-padding" *ngIf="isSubmitted && errorControl.apellido.errors.required">
+      Ingrese un apellido.
+    </span>
+    <ion-item lines="full">
+      <ion-label position="floating">Correo</ion-label>
+      <ion-input formControlName="correo" type="email"></ion-input>
+    </ion-item>
+    <span class="error ion-padding" *ngIf="isSubmitted && errorControl.correo.errors.required">
+      Ingrese un correo.
+    </span>
+    <span class="error ion-padding" *ngIf="isSubmitted && errorControl.correo.errors.pattern">
+      Por favor, ingrese un correo valido.
+    </span>
+    <ion-item lines="full">
+      <ion-label position="floating">Contraseña</ion-label>
+      <ion-input formControlName="password" type="text" required></ion-input>
+    </ion-item>
+    <span class="error ion-padding" *ngIf="isSubmitted && errorControl.password.errors.required">
+      Ingrese una contraseña.
+    </span>
+    <span class="error ion-padding" *ngIf="isSubmitted && errorControl.password.errors.minLength">
+      Debe ser mayor a 6 caracteres.
+    </span>
+    <ion-row>
+      <ion-col>
+        <ion-button type="submit" expand="block">Submit</ion-button>
+      </ion-col>
+    </ion-row>
+  </form>
 </ion-content>
