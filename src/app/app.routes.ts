@@ -15,8 +15,8 @@ export const routes: Routes = [
     loadComponent: () => import('./inicio-sesion/login/login.page').then( m => m.LoginPage)
   },
   {
-    path: 'olvide-contrasena',
-    loadComponent: () => import('./inicio-sesion/olvide-contrasena/olvide-contrasena.page').then( m => m.OlvideContrasenaPage)
+    path: 'registro',
+    loadComponent: () => import('./inicio-sesion/registro/registro.page').then( m => m.RegistroPage)
   },
   {
     path: 'perdi-mascota', component: PerdiMascotaComponent
