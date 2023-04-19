@@ -5,7 +5,6 @@ import { RouterLink } from '@angular/router';
 import { InicioSesionModule } from './inicio-sesion/inicio-sesion.module';
 import { HomeModule } from './home/home.module';
 import { CommonModule } from '@angular/common';
-import { MenuService } from './menu.service';
 
 
 @Component({
@@ -23,11 +22,9 @@ import { MenuService } from './menu.service';
   ],
 })
 export class AppComponent {
-  constructor(private menuService: MenuService) {
-    this.menuService.mostrarMenu$.subscribe(mostrarMenu => {
-      this.mostrarMenu = mostrarMenu;
-    });
+  constructor() {
+
   }
 
-  mostrarMenu = true;
+
 }

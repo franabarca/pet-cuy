@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, FormsModule, Validators } from '@angular/forms';
 import { IonicModule, AlertController } from '@ionic/angular';
-import { MenuService } from '../../menu.service';
+
 import { Router } from '@angular/router';
 
 @Component({
@@ -14,11 +14,9 @@ import { Router } from '@angular/router';
 })
 export class RegistroPage implements OnInit {
 
-  constructor(private menuService: MenuService, private router: Router, public alertController: AlertController) {}
+  constructor( private router: Router, public alertController: AlertController) {}
 
-  ionViewDidEnter() {
-    this.menuService.ocultarMenu();
-  }
+
   ngOnInit() {
     
   }
