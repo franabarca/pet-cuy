@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
-import { MenuService } from '../../menu.service';
+import { RouterLink } from '@angular/router';
 
 
 @Component({
@@ -10,15 +10,13 @@ import { MenuService } from '../../menu.service';
   templateUrl: './login.page.html',
   styleUrls: ['./login.page.scss'],
   standalone: true,
-  imports: [IonicModule, CommonModule, FormsModule]
+  imports: [IonicModule, CommonModule, FormsModule,
+    RouterLink]
 })
 export class LoginPage implements OnInit {
 
-  constructor(private menuService: MenuService) {}
+  constructor() {}
 
-  ionViewDidEnter() {
-    this.menuService.ocultarMenu();
-  }
   ngOnInit() {
   }
 

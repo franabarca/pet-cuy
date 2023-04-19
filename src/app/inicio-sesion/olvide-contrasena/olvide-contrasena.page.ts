@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Form, FormBuilder, FormGroup, FormsModule, Validators, ReactiveFormsModule, } from '@angular/forms';
 import { IonicModule, AlertController } from '@ionic/angular';
-import { MenuService } from 'src/app/menu.service';
+
 import { Router } from '@angular/router';
 
 
@@ -18,10 +18,8 @@ export class OlvideContrasenaPage implements OnInit {
   correoForm: FormGroup;
   isSubmitted= false;
 
-  constructor(private menuService:MenuService, private router:Router, public alertController:AlertController, public formBuilder:FormBuilder) { }
-  ionViewDidEnter() {
-    this.menuService.ocultarMenu();
-  }
+  constructor( private router:Router, public alertController:AlertController, public formBuilder:FormBuilder) { }
+
   ngOnInit() {
     
   }
