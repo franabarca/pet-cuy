@@ -1,3 +1,32 @@
-<p>
-  encontre-mascota works!
-</p>
+<div class="container my-5">
+  <h1 class="mb-4">Found Pet Form</h1>
+
+  <form >
+    <div class="mb-3">
+      <label for="petType" class="form-label">Pet Type</label>
+      <input type="text" name="petType" class="form-control" id="petType">
+    </div>
+
+    <div class="mb-3">
+      <label for="petBreed" class="form-label">Pet Breed</label>
+      <input type="text"  name="petBreed" class="form-control" id="petBreed">
+    </div>
+
+    <div class="mb-3">
+      <label for="petColor" class="form-label">Pet Color</label>
+      <input type="text"  name="petColor" class="form-control" id="petColor">
+    </div>
+
+    <div class="mb-3">
+      <label for="petDescription" class="form-label">Pet Description</label>
+      <textarea class="form-control"  name="petDescription" id="petDescription" rows="3"></textarea>
+    </div>
+
+    <div class="mb-3">
+      <label for="petImage" class="form-label">Pet Image</label>
+      <input type="file"  name="petImage" class="form-control-file" id="petImage">
+    </div>
+
+    <button type="submit" class="btn btn-primary">Submit</button>
+  </form>
+</div>
