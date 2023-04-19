@@ -3,7 +3,6 @@ import { EditarPerfilComponent } from './menu/editar-perfil/editar-perfil.compon
 import { VerPerfilComponent } from './menu/ver-perfil/ver-perfil.component';
 import { EncontreMascotaComponent } from './home/encontre-mascota/encontre-mascota.component';
 import { PerdiMascotaComponent } from './home/perdi-mascota/perdi-mascota.component';
-import { OlvideContrasenaPage } from './inicio-sesion/olvide-contrasena/olvide-contrasena.page';
 
 
 export const routes: Routes = [
