@@ -7,6 +7,7 @@ import { HomeModule } from './home/home.module';
 import { CommonModule } from '@angular/common';
 import { MenuService } from './menu.service';
 
+
 @Component({
   selector: 'app-root',
   templateUrl: 'app.component.html',

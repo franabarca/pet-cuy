@@ -1,0 +1,24 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>olvide-contrasena</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <div id="container">
+    <div class="container">
+      <p>Ingrese su correo para reestablecer su contraseña</p>
+      <form>
+        <ion-item lines="full">
+          <ion-label position="floating">Email</ion-label>
+          <ion-input type="email"></ion-input>
+        </ion-item>
+      </form>
+      <ion-row>
+        <ion-col>
+          <ion-button type="submit" (click)="submitForm()">Enviar</ion-button>
+        </ion-col>
+      </ion-row>
+    </div>
+  </div>
+</ion-content>
