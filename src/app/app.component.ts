@@ -5,6 +5,7 @@ import { RouterLink } from '@angular/router';
 import { InicioSesionModule } from './inicio-sesion/inicio-sesion.module';
 import { HomeModule } from './home/home.module';
 import { CommonModule } from '@angular/common';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 
 @Component({
@@ -14,6 +15,8 @@ import { CommonModule } from '@angular/common';
   standalone: true,
   imports: [
     IonicModule, 
+    FormsModule,
+    ReactiveFormsModule,
     MenuModule,
     RouterLink,
     InicioSesionModule,
