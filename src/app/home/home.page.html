@@ -9,16 +9,17 @@
 <ion-content [fullscreen]="true">
   <ion-header collapse="condense">
     <ion-toolbar>
-      <ion-title size="large">MASCOTAS PERDIDAS CERCA</ion-title>
+      <ion-title id="titulo">MASCOTAS PERDIDAS CERCA</ion-title>
     </ion-toolbar>
   </ion-header>
 
-  <div id="container">
-    <strong> ACA VA EL MAPA</strong>
-    <p>🌽🌽🌽🌽🌽🌽🌽🌽🌽🌽🌽🌽🌽🌽🌽🌽🌽🌽🌽🌽🌽</p>
-
-    
-  </div>
+  <ion-card>
+    <div #mapElement class="map"></div>
+    <ion-card-header>
+        <ion-card-subtitle>Mi ubicación</ion-card-subtitle>
+        <ion-card-title></ion-card-title>
+    </ion-card-header>
+  </ion-card>
 </ion-content>
 <ion-footer>
 
