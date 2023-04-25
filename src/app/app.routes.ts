@@ -1,7 +1,6 @@
 import { Routes } from '@angular/router';
 import { EditarPerfilComponent } from './menu/editar-perfil/editar-perfil.component';
 import { VerPerfilComponent } from './menu/ver-perfil/ver-perfil.component';
-import { OlvidoContrasenaComponent } from './inicio-sesion/olvido-contrasena/olvido-contrasena.component';
 import { EncontreMascotaComponent } from './home/encontre-mascota/encontre-mascota.component';
 import { PerdiMascotaComponent } from './home/perdi-mascota/perdi-mascota.component';
 
@@ -16,7 +15,12 @@ export const routes: Routes = [
     loadComponent: () => import('./inicio-sesion/login/login.page').then( m => m.LoginPage)
   },
   {
-    path: 'olvido-contrasena', component: OlvidoContrasenaComponent
+    path: 'registro',
+    loadComponent: () => import('./inicio-sesion/registro/registro.page').then( m => m.RegistroPage)
+  },
+  {
+    path: 'contrasena',
+    loadComponent: () => import('./inicio-sesion/olvide-contrasena/olvide-contrasena.page').then( m => m.OlvideContrasenaPage)
   },
   {
     path: 'perdi-mascota', component: PerdiMascotaComponent
@@ -32,15 +36,17 @@ export const routes: Routes = [
   },
   {
     path: '',
-    redirectTo: 'home',
+    redirectTo: 'login',
     pathMatch: 'full',
   },
   
   {
     path: '**',
-    redirectTo: 'home',
+    redirectTo: 'login',
     pathMatch: 'full',
   },
+  
+
  
 
 ];

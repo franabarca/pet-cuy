@@ -1,3 +1,24 @@
-<p>
-  editar-perfil works!
-</p>
+<nav class="navbar navbar-dark bg-dark">
+  <div class="container-fluid">
+    <span class="navbar-brand mb-0 h1">Editar Perfil</span>
+  </div>
+</nav>
+
+<div class="container my-5">
+  <form >
+    <div class="mb-3">
+      <label for="name" class="form-label">Nombre</label>
+      <input type="text"  name="name" class="form-control" id="name">
+    </div>
+
+    <div class="mb-3">
+      <label for="email" class="form-label">Email</label>
+      <input type="email" name="email" class="form-control" id="email">
+    </div>
+
+    <!-- Add more form fields as needed -->
+    
+    <button type="submit" class="btn btn-primary" (click)="guardar()">Guardar Cambios</button>
+  </form>
+</div>
+
