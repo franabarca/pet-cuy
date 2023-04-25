@@ -6,6 +6,8 @@ import { InicioSesionModule } from './inicio-sesion/inicio-sesion.module';
 import { HomeModule } from './home/home.module';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
+
 
 
 @Component({
@@ -22,6 +24,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     InicioSesionModule,
     HomeModule,
     CommonModule,
+    HttpClientModule
   ],
 })
 export class AppComponent {
