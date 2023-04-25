@@ -19,10 +19,10 @@
     
     <ion-button expand="block" type="submit" (click)="home()">Iniciar sesión</ion-button>
   </form>
-  <div class="ion-text-center ion-margin">
-    <a [routerLink]="['/contrasena']">Olvidaste tu contraseña?</a>
+  <div class="ion-text-left ion-margin-top ion-margin-bottom">
+    <a [routerLink]="['/contrasena']" style="font-size: 14px;">Olvidaste tu contraseña?</a>
   </div>
-  <div class="ion-text-center">
+  <div class="ion-text-center" style="position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%);">
     <p>No tienes cuenta?</p>
     <a [routerLink]="['/registro']">Registrarse</a>
   </div>
