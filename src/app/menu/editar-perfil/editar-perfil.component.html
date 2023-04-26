@@ -1,13 +1,13 @@
 <nav class="navbar navbar-dark bg-dark">
   <div class="container-fluid">
-    <span class="navbar-brand mb-0 h1">Edit Profile</span>
+    <span class="navbar-brand mb-0 h1">Editar Perfil</span>
   </div>
 </nav>
 
 <div class="container my-5">
   <form >
     <div class="mb-3">
-      <label for="name" class="form-label">Name</label>
+      <label for="name" class="form-label">Nombre</label>
       <input type="text"  name="name" class="form-control" id="name">
     </div>
 
@@ -18,7 +18,7 @@
 
     <!-- Add more form fields as needed -->
     
-    <button type="submit" class="btn btn-primary">Save Changes</button>
+    <button type="submit" class="btn btn-primary" (click)="guardar()">Guardar Cambios</button>
   </form>
 </div>
 
