@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { AbstractControl, ValidatorFn , FormControl, FormBuilder, FormGroup, FormsModule, Validators, ReactiveFormsModule, } from '@angular/forms';
 import { IonicModule, AlertController } from '@ionic/angular';
-
+import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 
 
@@ -40,17 +40,32 @@ export class OlvideContrasenaPage implements OnInit {
     return '';
   }
 
-  constructor( private router:Router, public alertController:AlertController, public formBuilder:FormBuilder) { }
+  constructor( private router:Router, public alertController:AlertController, public formBuilder:FormBuilder, private http: HttpClient) { }
 
   ngOnInit() {
   }
 
   submitForm() {
-    if (this.forgotForm.valid) {
-      this.presentAlert("Felicitaciones","Se ha enviado un correo con tu nueva contraseña.");
-      this.router.navigate(['/login']);
+    if (this.forgotForm && this.forgotForm.valid) {
+      const rutControl = this.forgotForm.get('rut');
+      if (rutControl) {
+        const rut = rutControl.value;
+        const requestBody = { rut: rut };
+        this.http.post('https://luyinq.pythonanywhere.com/generar_password/', requestBody)
+          .subscribe((response: any) => {
+            if (response.success) {
+              this.presentAlert("Felicitaciones", response.message);
+              this.router.navigate(['/login']);
+            } else {
+              this.presentAlert("Error", response.message);
+            }
+          }, (error: any) => {
+            console.error(error);
+            this.presentAlert("Error", error.error.message);
+          });
+      }
     } else {
-      this.presentAlert("Error","Completa correctamente los campos.");
+      this.presentAlert("Error", "Completa correctamente los campos.");
     }
   }
 
