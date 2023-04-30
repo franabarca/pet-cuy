@@ -51,7 +51,7 @@ export class RegistroPage implements OnInit {
       apellido: new FormControl('',[Validators.required, Validators.minLength(2), Validators.maxLength(20)]),
       password: new FormControl('', [Validators.required, Validators.minLength(6), Validators.maxLength(20), Validators.pattern('(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9]).{6,}')]),
       confirmPassword: new FormControl('', [Validators.required, Validators.minLength(6), Validators.maxLength(20),]),
-      email: new FormControl('',[Validators.required, Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$")]),
+      email: new FormControl('',[Validators.required, Validators.pattern("^[a-zA-Z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$")]),
       celular: new FormControl('',[Validators.required, Validators.pattern("^(9)?[0-9]{9}$")])
   },
   {
