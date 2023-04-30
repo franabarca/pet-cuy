@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ContentChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { AbstractControl, EmailValidator, FormBuilder, FormControl, FormGroup, FormsModule, ValidatorFn, Validators, ReactiveFormsModule } from '@angular/forms';
-import { IonicModule, AlertController } from '@ionic/angular';
+import { IonicModule, AlertController, IonInput } from '@ionic/angular';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 
@@ -16,7 +16,8 @@ export class RegistroPage implements OnInit {
 
   /*VALIDAR FORM REGISTRO*/
   registerForm: FormGroup;
-  
+  show = false;
+
   getErrorMessage(controlName: string) {
     const control = this.registerForm.get(controlName);
     if (control?.hasError('required')) {
@@ -48,14 +49,18 @@ export class RegistroPage implements OnInit {
       rut: new FormControl('', [Validators.required, Validators.minLength(8), Validators.maxLength(9), Validators.pattern('[0-9A-Za-z]+'), this.rutValidator()]),
       nombre: new FormControl('',[Validators.required, Validators.minLength(2), Validators.maxLength(20)]),
       apellido: new FormControl('',[Validators.required, Validators.minLength(2), Validators.maxLength(20)]),
-      password: new FormControl('', [Validators.required, Validators.minLength(6), Validators.maxLength(20),]),
+      password: new FormControl('', [Validators.required, Validators.minLength(6), Validators.maxLength(20), Validators.pattern('(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9]).{6,}')]),
       confirmPassword: new FormControl('', [Validators.required, Validators.minLength(6), Validators.maxLength(20),]),
-      email: new FormControl('',[Validators.required]),
-      celular: new FormControl('',[Validators.required])
+      email: new FormControl('',[Validators.required, Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$")]),
+      celular: new FormControl('',[Validators.required, Validators.pattern("^(9)?[0-9]{9}$")])
   },
   {
     validator: this.matchingPasswords
   });
+  }
+
+  showPassword(){
+    this.show = !this.show;
   }
 
   matchingPasswords(control: AbstractControl){

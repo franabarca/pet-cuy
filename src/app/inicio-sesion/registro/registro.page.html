@@ -19,42 +19,42 @@
           </ion-text>
           <ion-item lines="full" *ngIf="registerForm">
             <ion-label position="floating">Nombre</ion-label>
-            <ion-input type="text" name="nombre" placeholder="Ingrese su nombre" formControlName="nombre" maxlength="20" ngModel pattern="[a-zA-Z]*"></ion-input>
+            <ion-input type="text" name="nombre" placeholder="Ingrese su nombre" formControlName="nombre" ngModel pattern="[a-zA-Z]*"></ion-input>
           </ion-item>
           <ion-text color="danger" *ngIf="registerForm.get('nombre')?.invalid && registerForm.get('nombre')?.touched">
             <div>{{ getErrorMessage('nombre') }}</div>
           </ion-text>
           <ion-item lines="full" *ngIf="registerForm">
             <ion-label position="floating">Apellido</ion-label>
-            <ion-input type="text" name="apellido" placeholder="Ingrese su apellido" formControlName="apellido" maxlength="20" ngModel pattern="[a-zA-Z]*"></ion-input>
+            <ion-input type="text" name="apellido" placeholder="Ingrese su apellido" formControlName="apellido" ngModel pattern="[a-zA-Z]*"></ion-input>
           </ion-item>
           <ion-text color="danger" *ngIf="registerForm.get('apellido')?.invalid && registerForm.get('apellido')?.touched">
             <div>{{ getErrorMessage('apellido') }}</div>
           </ion-text>
           <ion-item lines="full" *ngIf="registerForm">
-            <ion-label position="floating">correo</ion-label>
-            <ion-input type="text" name="email" placeholder="Ingrese su correo" formControlName="email" maxlength="20" ngModel pattern="[a-zA-Z]*"></ion-input>
+            <ion-label position="floating">Correo</ion-label>
+            <ion-input type="text" name="email" placeholder="Ingrese su correo" formControlName="email"></ion-input>
           </ion-item>
           <ion-text color="danger" *ngIf="registerForm.get('email')?.invalid && registerForm.get('email')?.touched">
             <div>{{ getErrorMessage('email') }}</div>
           </ion-text>
           <ion-item lines="full" *ngIf="registerForm">
             <ion-label position="floating">Celular</ion-label>
-            <ion-input type="text" name="celular" placeholder="Ingrese su celular" formControlName="celular" minlength="9" maxlength="9" ngModel pattern="[a-zA-Z]*"></ion-input>
+            <ion-input type="text" name="celular" placeholder="912341234" formControlName="celular" minlength="9" maxlength="9"></ion-input>
           </ion-item>
           <ion-text color="danger" *ngIf="registerForm.get('celular')?.invalid && registerForm.get('celular')?.touched">
             <div>{{ getErrorMessage('celular') }}</div>
           </ion-text>
           <ion-item lines="full" *ngIf="registerForm">
             <ion-label position="floating">Contraseña</ion-label>
-            <ion-input type="text" name="password" placeholder="Ingrese su contraseña" formControlName="password" maxlength="20" ngModel pattern="[a-zA-Z]*"></ion-input>
+            <ion-input type="{{(show === false)?'password':'text'}}" name="password" placeholder="Ingrese su contraseña" maxlength="20" formControlName="password" ></ion-input>
           </ion-item>
           <ion-text color="danger" *ngIf="registerForm.get('password')?.invalid && registerForm.get('password')?.touched">
             <div>{{ getErrorMessage('password') }}</div>
           </ion-text>
           <ion-item lines="full" *ngIf="registerForm">
             <ion-label position="floating">Confirme su Contraseña</ion-label>
-            <ion-input type="text" name="confirmPassword" placeholder="Confirme su contraseña" formControlName="confirmPassword" maxlength="20" ngModel pattern="[a-zA-Z]*"></ion-input>
+            <ion-input type="{{(show === false)?'password':'text'}}" name="confirmPassword" placeholder="Confirme su contraseña" formControlName="confirmPassword"></ion-input>
           </ion-item>
           <ion-text color="danger" *ngIf="registerForm.get('confirmPassword')?.invalid && registerForm.get('confirmPassword')?.touched || registerForm.get('confirmPassword')?.hasError('not_matching')">
             <div>{{ getErrorMessage('confirmPassword') }}</div>
