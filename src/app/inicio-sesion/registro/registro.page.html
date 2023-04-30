@@ -43,7 +43,7 @@
             <ion-input type="text" name="celular" placeholder="912341234" formControlName="celular" minlength="9" maxlength="9"></ion-input>
           </ion-item>
           <ion-text color="danger" *ngIf="registerForm.get('celular')?.invalid && registerForm.get('celular')?.touched">
-            <div>{{ getErrorMessage('celular') }}</div>
+            <div><p>Número no valido</p></div>
           </ion-text>
           <ion-item lines="full" *ngIf="registerForm">
             <ion-label position="floating">Contraseña</ion-label>

@@ -1,9 +1,12 @@
 import { Component, OnInit, ContentChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { AbstractControl, EmailValidator, FormBuilder, FormControl, FormGroup, FormsModule, ValidatorFn, Validators, ReactiveFormsModule } from '@angular/forms';
+import { AbstractControl, EmailValidator, FormBuilder, FormControl, 
+FormGroup, FormsModule, ValidatorFn, Validators, ReactiveFormsModule, AsyncValidatorFn, ValidationErrors } from '@angular/forms';
 import { IonicModule, AlertController, IonInput } from '@ionic/angular';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
+import { Observable, of } from 'rxjs';
+import { request } from 'http';
 
 @Component({
   selector: 'app-registro',
@@ -52,7 +55,7 @@ export class RegistroPage implements OnInit {
       password: new FormControl('', [Validators.required, Validators.minLength(6), Validators.maxLength(20), Validators.pattern('(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9]).{6,}')]),
       confirmPassword: new FormControl('', [Validators.required, Validators.minLength(6), Validators.maxLength(20),]),
       email: new FormControl('',[Validators.required, Validators.pattern("^[a-zA-Z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$")]),
-      celular: new FormControl('',[Validators.required, Validators.pattern("^(9)?[0-9]{9}$")])
+      celular: new FormControl('',[Validators.required, Validators.min(900000000), Validators.max(999999999)])
   },
   {
     validator: this.matchingPasswords
@@ -61,6 +64,21 @@ export class RegistroPage implements OnInit {
 
   showPassword(){
     this.show = !this.show;
+  }
+
+  getData(){
+    return this.http.get('https://luyinq.pythonanywhere.com/usuario/');
+  }
+
+  rutExistente(): ValidatorFn {
+    return (control: AbstractControl): {[key: string]: any} | null => {
+      const rut = control.value;
+      if (!rut) {
+        return null;
+      }
+      const isValid = this.validarRut(rut);
+      return isValid ? null : { 'invalidRut': true };
+    };
   }
 
   matchingPasswords(control: AbstractControl){
@@ -108,7 +126,7 @@ export class RegistroPage implements OnInit {
             }
           }, (error: any) => {
             console.error(error);
-            this.presentAlert("Error", error.error.message);
+            this.presentAlert("Error", error.error.details.rut);
           });
       }
     } else {
