@@ -15,12 +15,12 @@
       <div>{{ getErrorMessage('rut') }}</div>
     </ion-text>
     
-    <ion-item>
+    <ion-item lines="full" *ngIf="forgotForm">
       <ion-label position="floating">Contraseña</ion-label>
-      <ion-input type="password" name="password" required></ion-input>
+      <ion-input type="password" name="password" maxlength="20" formControlName="password" required></ion-input>
     </ion-item>
     
-    <ion-button class="ion-margin-top" expand="block" type="submit" (click)="home()" [disabled]="forgotForm.invalid">Iniciar sesión</ion-button>
+    <ion-button class="ion-margin-top" expand="block" type="submit" [disabled]="forgotForm.invalid">Iniciar sesión</ion-button>
   </form>
   <div class="ion-text-left ion-margin-top ion-margin-bottom">
     <a [routerLink]="['/contrasena']" style="font-size: 14px;">Olvidaste tu contraseña?</a>

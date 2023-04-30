@@ -17,9 +17,10 @@ import { HttpClient } from '@angular/common/http';
 export class LoginPage implements OnInit {
 
   forgotForm = new FormGroup({
-    rut: new FormControl('', [Validators.required, Validators.minLength(8), Validators.maxLength(9), Validators.pattern('[0-9A-Za-z]+'), this.rutValidator()])
+    rut: new FormControl('', [Validators.required, Validators.minLength(8), Validators.maxLength(9), Validators.pattern('[0-9A-Za-z]+'), this.rutValidator()]),
+    password: new FormControl('')
   });
-
+  
   getErrorMessage(controlName: string) {
     const control = this.forgotForm.get(controlName);
     if (control?.hasError('required')) {
@@ -45,21 +46,36 @@ export class LoginPage implements OnInit {
   ngOnInit() {
   }
 
-  home(){
-    this.router.navigate(['/home']);
-  }
+
 
   submitForm() {
     if (this.forgotForm && this.forgotForm.valid) {
       const rutControl = this.forgotForm.get('rut');
-      if (rutControl) {
+      const passwordControl = this.forgotForm.get('password');
+      if (rutControl && passwordControl) {
         const rut = rutControl.value;
-        const requestBody = { rut: rut };
-        this.http.post('https://luyinq.pythonanywhere.com/generar_password/', requestBody)
+        const password = passwordControl.value;
+        console.log(rut)
+        console.log(password)
+        const requestBody = { rut: rut , contrasena: password };
+        this.http.post('https://luyinq.pythonanywhere.com/login/', requestBody)
           .subscribe((response: any) => {
             if (response.success) {
+              localStorage.setItem('loginResponse', JSON.stringify(response));
               this.presentAlert("Felicitaciones", response.message);
-              this.router.navigate(['/login']);
+              this.router.navigate(['/home']);
+              const loginResponseString = localStorage.getItem('loginResponse');
+              if (loginResponseString) {
+                const loginResponse = JSON.parse(loginResponseString);
+                if (loginResponse.success) {
+                  const tokens = loginResponse.data.tokens;
+                  if (tokens && tokens.length > 0) {
+                    const tokenKey = tokens[0]['key'];
+                    console.log(tokenKey);
+                    
+                  }
+                }
+              }
             } else {
               this.presentAlert("Error", response.message);
             }
