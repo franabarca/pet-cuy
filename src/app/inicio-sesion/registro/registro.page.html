@@ -1,35 +1,70 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-title>registro</ion-title>
+    <ion-title>Registro</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
-  <form>
-    <ion-item lines="full">
-      <ion-label position="floating">Rut</ion-label>
-      <ion-input type="text"></ion-input>
-    </ion-item>
-    <ion-item lines="full">
-      <ion-label position="floating">Nombre</ion-label>
-      <ion-input type="text"></ion-input>
-    </ion-item>
-    <ion-item lines="full">
-      <ion-label position="floating">Apellido</ion-label>
-      <ion-input type="text"></ion-input>
-    </ion-item>
-    <ion-item lines="full">
-      <ion-label position="floating">Correo</ion-label>
-      <ion-input type="email"></ion-input>
-    </ion-item>
-    <ion-item lines="full">
-      <ion-label position="floating">Contraseña</ion-label>
-      <ion-input type="text" required></ion-input>
-    </ion-item>
-    <ion-row>
-      <ion-col>
-        <ion-button (click)="inicioSesion()" type="submit" expand="block">Registrarse</ion-button>
-      </ion-col>
-    </ion-row>
-  </form>
+<ion-content [fullscreen]="true">
+
+  <div id="container">
+    <div class="container">
+        <p>Ingrese sus datos<br>
+        <form (submit)="submitForm()" [formGroup]="registerForm">
+          <ion-item lines="full" *ngIf="registerForm">
+            <ion-label position="floating">Rut</ion-label>
+            <ion-input type="text" name="rut" placeholder="Sin puntos ni guión" formControlName="rut" maxlength="9"></ion-input>
+          </ion-item>
+          <ion-text color="danger" *ngIf="registerForm.get('rut')?.invalid && registerForm.get('rut')?.touched">
+            <div>{{ getErrorMessage('rut') }}</div>
+          </ion-text>
+          <ion-item lines="full" *ngIf="registerForm">
+            <ion-label position="floating">Nombre</ion-label>
+            <ion-input type="text" name="nombre" placeholder="Ingrese su nombre" formControlName="nombre" maxlength="20" ngModel pattern="[a-zA-Z]*"></ion-input>
+          </ion-item>
+          <ion-text color="danger" *ngIf="registerForm.get('nombre')?.invalid && registerForm.get('nombre')?.touched">
+            <div>{{ getErrorMessage('nombre') }}</div>
+          </ion-text>
+          <ion-item lines="full" *ngIf="registerForm">
+            <ion-label position="floating">Apellido</ion-label>
+            <ion-input type="text" name="apellido" placeholder="Ingrese su apellido" formControlName="apellido" maxlength="20" ngModel pattern="[a-zA-Z]*"></ion-input>
+          </ion-item>
+          <ion-text color="danger" *ngIf="registerForm.get('apellido')?.invalid && registerForm.get('apellido')?.touched">
+            <div>{{ getErrorMessage('apellido') }}</div>
+          </ion-text>
+          <ion-item lines="full" *ngIf="registerForm">
+            <ion-label position="floating">correo</ion-label>
+            <ion-input type="text" name="email" placeholder="Ingrese su correo" formControlName="email" maxlength="20" ngModel pattern="[a-zA-Z]*"></ion-input>
+          </ion-item>
+          <ion-text color="danger" *ngIf="registerForm.get('email')?.invalid && registerForm.get('email')?.touched">
+            <div>{{ getErrorMessage('email') }}</div>
+          </ion-text>
+          <ion-item lines="full" *ngIf="registerForm">
+            <ion-label position="floating">Celular</ion-label>
+            <ion-input type="text" name="celular" placeholder="Ingrese su celular" formControlName="celular" minlength="9" maxlength="9" ngModel pattern="[a-zA-Z]*"></ion-input>
+          </ion-item>
+          <ion-text color="danger" *ngIf="registerForm.get('celular')?.invalid && registerForm.get('celular')?.touched">
+            <div>{{ getErrorMessage('celular') }}</div>
+          </ion-text>
+          <ion-item lines="full" *ngIf="registerForm">
+            <ion-label position="floating">Contraseña</ion-label>
+            <ion-input type="text" name="password" placeholder="Ingrese su contraseña" formControlName="password" maxlength="20" ngModel pattern="[a-zA-Z]*"></ion-input>
+          </ion-item>
+          <ion-text color="danger" *ngIf="registerForm.get('password')?.invalid && registerForm.get('password')?.touched">
+            <div>{{ getErrorMessage('password') }}</div>
+          </ion-text>
+          <ion-item lines="full" *ngIf="registerForm">
+            <ion-label position="floating">Confirme su Contraseña</ion-label>
+            <ion-input type="text" name="confirmPassword" placeholder="Confirme su contraseña" formControlName="confirmPassword" maxlength="20" ngModel pattern="[a-zA-Z]*"></ion-input>
+          </ion-item>
+          <ion-text color="danger" *ngIf="registerForm.get('confirmPassword')?.invalid && registerForm.get('confirmPassword')?.touched || registerForm.get('confirmPassword')?.hasError('not_matching')">
+            <div>{{ getErrorMessage('confirmPassword') }}</div>
+          </ion-text>
+        <ion-row>
+          <ion-col>
+            <ion-button type="submit" [disabled]="registerForm.invalid">Enviar</ion-button>
+          </ion-col>
+        </ion-row>
+      </form>
+    </div>
+  </div>
 </ion-content>
