@@ -1,9 +1,12 @@
 import { Component, OnInit, ContentChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { AbstractControl, EmailValidator, FormBuilder, FormControl, FormGroup, FormsModule, ValidatorFn, Validators, ReactiveFormsModule } from '@angular/forms';
+import { AbstractControl, EmailValidator, FormBuilder, FormControl, 
+FormGroup, FormsModule, ValidatorFn, Validators, ReactiveFormsModule, AsyncValidatorFn, ValidationErrors } from '@angular/forms';
 import { IonicModule, AlertController, IonInput } from '@ionic/angular';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { Router } from '@angular/router';
+import { Observable, delay, of } from 'rxjs';
+import { request } from 'http';
 
 @Component({
   selector: 'app-registro',
@@ -13,6 +16,8 @@ import { Router } from '@angular/router';
   imports: [IonicModule, CommonModule, FormsModule, ReactiveFormsModule]
 })
 export class RegistroPage implements OnInit {
+
+  public rutErrorMessage: string;
 
   /*VALIDAR FORM REGISTRO*/
   registerForm: FormGroup;
@@ -43,7 +48,6 @@ export class RegistroPage implements OnInit {
 
   constructor( private router: Router, public alertController: AlertController, public fb:FormBuilder, private http: HttpClient) {}
 
-
   ngOnInit() {
     this.registerForm = this.fb.group({
       rut: new FormControl('', [Validators.required, Validators.minLength(8), Validators.maxLength(9), Validators.pattern('[0-9A-Za-z]+'), this.rutValidator()]),
@@ -51,8 +55,8 @@ export class RegistroPage implements OnInit {
       apellido: new FormControl('',[Validators.required, Validators.minLength(2), Validators.maxLength(20)]),
       password: new FormControl('', [Validators.required, Validators.minLength(6), Validators.maxLength(20), Validators.pattern('(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9]).{6,}')]),
       confirmPassword: new FormControl('', [Validators.required, Validators.minLength(6), Validators.maxLength(20),]),
-      email: new FormControl('',[Validators.required, Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$")]),
-      celular: new FormControl('',[Validators.required, Validators.pattern("^(9)?[0-9]{9}$")])
+      email: new FormControl('',[Validators.required, Validators.pattern("^[a-zA-Z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$")]),
+      celular: new FormControl('',[Validators.required, Validators.min(900000000), Validators.max(999999999)])
   },
   {
     validator: this.matchingPasswords
@@ -61,6 +65,10 @@ export class RegistroPage implements OnInit {
 
   showPassword(){
     this.show = !this.show;
+  }
+
+  getData(){
+    return this.http.get('https://luyinq.pythonanywhere.com/usuario/');
   }
 
   matchingPasswords(control: AbstractControl){
@@ -108,15 +116,13 @@ export class RegistroPage implements OnInit {
             }
           }, (error: any) => {
             console.error(error);
-            this.presentAlert("Error", error.error.message);
+            this.presentAlert("Error", "Existen errores en los campos rellenados, intente de nuevo.");
           });
       }
     } else {
       this.presentAlert("Error", "Completa correctamente los campos.");
     }
   }
-
-
 
   rutValidator(): ValidatorFn {
     return (control: AbstractControl): {[key: string]: any} | null => {
@@ -179,6 +185,7 @@ export class RegistroPage implements OnInit {
     await alert.present();
 
   }
+
 }
 
 function compare(password: string, confirmPassword: string) {
