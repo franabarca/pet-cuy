@@ -3,9 +3,9 @@ import { CommonModule } from '@angular/common';
 import { AbstractControl, EmailValidator, FormBuilder, FormControl, 
 FormGroup, FormsModule, ValidatorFn, Validators, ReactiveFormsModule, AsyncValidatorFn, ValidationErrors } from '@angular/forms';
 import { IonicModule, AlertController, IonInput } from '@ionic/angular';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { Router } from '@angular/router';
-import { Observable, of } from 'rxjs';
+import { Observable, delay, of } from 'rxjs';
 import { request } from 'http';
 
 @Component({
@@ -16,6 +16,8 @@ import { request } from 'http';
   imports: [IonicModule, CommonModule, FormsModule, ReactiveFormsModule]
 })
 export class RegistroPage implements OnInit {
+
+  public rutErrorMessage: string;
 
   /*VALIDAR FORM REGISTRO*/
   registerForm: FormGroup;
@@ -46,7 +48,6 @@ export class RegistroPage implements OnInit {
 
   constructor( private router: Router, public alertController: AlertController, public fb:FormBuilder, private http: HttpClient) {}
 
-
   ngOnInit() {
     this.registerForm = this.fb.group({
       rut: new FormControl('', [Validators.required, Validators.minLength(8), Validators.maxLength(9), Validators.pattern('[0-9A-Za-z]+'), this.rutValidator()]),
@@ -68,17 +69,6 @@ export class RegistroPage implements OnInit {
 
   getData(){
     return this.http.get('https://luyinq.pythonanywhere.com/usuario/');
-  }
-
-  rutExistente(): ValidatorFn {
-    return (control: AbstractControl): {[key: string]: any} | null => {
-      const rut = control.value;
-      if (!rut) {
-        return null;
-      }
-      const isValid = this.validarRut(rut);
-      return isValid ? null : { 'invalidRut': true };
-    };
   }
 
   matchingPasswords(control: AbstractControl){
@@ -126,15 +116,13 @@ export class RegistroPage implements OnInit {
             }
           }, (error: any) => {
             console.error(error);
-            this.presentAlert("Error", error.error.details.rut);
+            this.presentAlert("Error", "Existen errores en los campos rellenados, intente de nuevo.");
           });
       }
     } else {
       this.presentAlert("Error", "Completa correctamente los campos.");
     }
   }
-
-
 
   rutValidator(): ValidatorFn {
     return (control: AbstractControl): {[key: string]: any} | null => {
@@ -197,6 +185,7 @@ export class RegistroPage implements OnInit {
     await alert.present();
 
   }
+
 }
 
 function compare(password: string, confirmPassword: string) {
