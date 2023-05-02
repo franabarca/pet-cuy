@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { AbstractControl, EmailValidator, FormBuilder, FormControl, FormGroup, FormsModule, ValidatorFn, Validators, ReactiveFormsModule } from '@angular/forms';
 import { IonicModule, AlertController } from '@ionic/angular';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders  } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { MenuModule } from '../menu.module';
 
@@ -17,7 +17,7 @@ import { MenuModule } from '../menu.module';
 export class EditarPerfilComponent  implements OnInit {
 
   registerForm: FormGroup;
-  dataRut: string;
+  dataRut = localStorage.getItem('rut');
 
   constructor( private router: Router, 
     public alertController: AlertController, 
@@ -32,9 +32,8 @@ export class EditarPerfilComponent  implements OnInit {
       if (loginResponse.success) {
         const data = loginResponse.data.usuario;
         if (data) {
-          this.dataRut = data[0]['rut']; // Asignar el valor a la propiedad global dataRut
-          console.log(this.dataRut);
-          this.http.get('https://luyinq.pythonanywhere.com/usuario/' + this.dataRut)
+          const headers = new HttpHeaders().set('Authorization', 'Token ' + localStorage.getItem('token'));
+          this.http.get('https://luyinq.pythonanywhere.com/usuario/' + localStorage.getItem('rut') + '/', { headers })
             .subscribe((response: any) => {
               if (response.success) {
                 const userData = response.data;
@@ -69,7 +68,7 @@ export class EditarPerfilComponent  implements OnInit {
     celular: new FormControl('',[Validators.required])
   });
 
-  this.getUserData();}
+ }
   
   submitForm() {
     if (this.registerForm && this.registerForm.valid) {
@@ -85,23 +84,9 @@ export class EditarPerfilComponent  implements OnInit {
         const apellido = apeControl.value;
         const email = emailControl.value;
         const celular = celControl.value;
-      
-        
-        this.http.post(this.dataRut, {
-          rut: rut,
-          nombre: nombre,
-          apellido: apellido,
-          email: email,
-          celular: celular
-        })
-        .subscribe(response => {
-          // Se ejecuta cuando la petición se completa exitosamente
-          console.log(response);
-        }, error => {
-          // Se ejecuta cuando ocurre un error en la petición
-          console.log(error);
-        });
-      }}}
+      }
+    }
+  }
 
   rutValidator(): ValidatorFn {
     return (control: AbstractControl): {[key: string]: any} | null => {

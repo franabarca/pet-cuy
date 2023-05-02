@@ -1,6 +1,8 @@
 import { Component, ViewChild, AfterViewInit } from '@angular/core';
 import { IonicModule } from '@ionic/angular';
 import { RouterLink } from '@angular/router';
+import { AppComponent } from 'app/app.component';
+
 declare var google: { maps: { Map: new (arg0: any, arg1: { center: { lat: number; lng: number; }; zoom: number; }) => any; }; };
 
 @Component({
@@ -21,7 +23,10 @@ export class HomePage implements AfterViewInit {
     zoom: 8,
   };
 
-  constructor() {}
+  constructor(private main: AppComponent) {
+    const nombre = localStorage.getItem('nombre');
+    this.main.nombre = nombre !== null ? nombre : '';
+  }
   
   loadMap(){
     this.map = new google.maps.Map(this.mapElement.nativeElement, this.mapOptions)

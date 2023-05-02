@@ -4,6 +4,7 @@ import { AbstractControl, ValidatorFn , FormControl, FormBuilder, FormGroup, For
 import { IonicModule, AlertController  } from '@ionic/angular';
 import { Router, RouterLink } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
+import { AppComponent } from 'app/app.component';
 
 
 @Component({
@@ -41,7 +42,7 @@ export class LoginPage implements OnInit {
     return '';
   }
 
-  constructor(private router: Router, public alertController:AlertController, public formBuilder:FormBuilder, private http: HttpClient) {}
+  constructor(private router: Router, public alertController:AlertController, public formBuilder:FormBuilder, private http: HttpClient, private main: AppComponent) {}
 
   ngOnInit() {
   }
@@ -55,28 +56,22 @@ export class LoginPage implements OnInit {
       if (rutControl && passwordControl) {
         const rut = rutControl.value;
         const password = passwordControl.value;
-        console.log(rut)
-        console.log(password)
         const requestBody = { rut: rut , contrasena: password };
         this.http.post('https://luyinq.pythonanywhere.com/login/', requestBody)
           .subscribe((response: any) => {
             if (response.success) {
-              localStorage.setItem('loginResponse', JSON.stringify(response));
+              localStorage.setItem('rut', response.data.usuario.rut)
+              localStorage.setItem('correo', response.data.usuario.correo)
+              localStorage.setItem('nombre', response.data.usuario.nombre)
+              localStorage.setItem('apellido', response.data.usuario.apellido)
+              localStorage.setItem('foto', response.data.usuario.foto)
+              localStorage.setItem('celular', response.data.usuario.celular)
+              localStorage.setItem('isActive', response.data.usuario.isActive)
+              localStorage.setItem('isAdmin', response.data.usuario.isAdmin)
+              localStorage.setItem('token', response.data.tokens[0].key);
               this.presentAlert("Felicitaciones", response.message);
+              this.main.showMenu = true;
               this.router.navigate(['/home']);
-              
-              const loginResponseString = localStorage.getItem('loginResponse');
-              if (loginResponseString) {
-                const loginResponse = JSON.parse(loginResponseString);
-                if (loginResponse.success) {
-                  const tokens = loginResponse.data.tokens;
-                  if (tokens && tokens.length > 0) {
-                    const tokenKey = tokens[0]['key'];
-                    console.log(tokenKey);
-                    
-                  }
-                }
-              }
             } else {
               this.presentAlert("Error", response.message);
             }
