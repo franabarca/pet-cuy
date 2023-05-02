@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Injectable, OnInit } from '@angular/core';
 import { IonicModule } from '@ionic/angular';
 import { MenuModule } from './menu/menu.module';
 import { RouterLink } from '@angular/router';
@@ -7,13 +7,14 @@ import { HomeModule } from './home/home.module';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
-
-
+import { Router } from '@angular/router';
+import { ApiService } from './shared/api.service';
 
 @Component({
   selector: 'app-root',
   templateUrl: 'app.component.html',
   styleUrls: ['app.component.scss'],
+  providers: [ApiService],
   standalone: true,
   imports: [
     IonicModule, 
@@ -27,10 +28,26 @@ import { HttpClientModule } from '@angular/common/http';
     HttpClientModule
   ],
 })
-export class AppComponent {
-  constructor() {
 
+export class AppComponent implements OnInit {
+  localStorage: Storage;
+  showMenu: boolean = false;
+  nombre: string;
+
+  constructor(private router: Router, private api: ApiService)
+  { }
+  
+  ngOnInit() {
+    this.localStorage = window.localStorage;
+    this.showMenu = !!this.localStorage.getItem('rut'); // Asigna el valor inicial de la variable showMenu
   }
+
+  logout() {
+    this.localStorage.clear()
+    this.showMenu = false; // Actualiza el valor de la variable showMenu
+    window.location.reload();
+  }
+
 
 
 }
