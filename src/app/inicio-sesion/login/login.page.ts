@@ -64,6 +64,7 @@ export class LoginPage implements OnInit {
               localStorage.setItem('loginResponse', JSON.stringify(response));
               this.presentAlert("Felicitaciones", response.message);
               this.router.navigate(['/home']);
+              
               const loginResponseString = localStorage.getItem('loginResponse');
               if (loginResponseString) {
                 const loginResponse = JSON.parse(loginResponseString);
