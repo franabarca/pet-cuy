@@ -8,12 +8,13 @@ import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { Router } from '@angular/router';
-
+import { ApiService } from './shared/api.service';
 
 @Component({
   selector: 'app-root',
   templateUrl: 'app.component.html',
   styleUrls: ['app.component.scss'],
+  providers: [ApiService],
   standalone: true,
   imports: [
     IonicModule, 
@@ -33,7 +34,8 @@ export class AppComponent implements OnInit {
   showMenu: boolean = false;
   nombre: string;
 
-  constructor(private router: Router){}
+  constructor(private router: Router, private api: ApiService)
+  { }
   
   ngOnInit() {
     this.localStorage = window.localStorage;
@@ -45,4 +47,7 @@ export class AppComponent implements OnInit {
     this.showMenu = false; // Actualiza el valor de la variable showMenu
     window.location.reload();
   }
+
+
+
 }

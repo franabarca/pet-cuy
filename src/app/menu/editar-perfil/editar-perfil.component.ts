@@ -3,8 +3,9 @@ import { CommonModule } from '@angular/common';
 import { AbstractControl, EmailValidator, FormBuilder, FormControl, FormGroup, FormsModule, ValidatorFn, Validators, ReactiveFormsModule } from '@angular/forms';
 import { IonicModule, AlertController } from '@ionic/angular';
 import { HttpClient, HttpHeaders  } from '@angular/common/http';
-import { Router } from '@angular/router';
+import { Router, NavigationEnd  } from '@angular/router';
 import { MenuModule } from '../menu.module';
+import { ApiService } from 'app/shared/api.service';
 
 @Component({
   selector: 'app-editar-perfil',
@@ -16,131 +17,113 @@ import { MenuModule } from '../menu.module';
 
 export class EditarPerfilComponent  implements OnInit {
 
-  registerForm: FormGroup;
-  dataRut = localStorage.getItem('rut');
+  nombrePutError: string;
+  apellidoPutError: string;
+  correoPutError: string;
+  celularPutError: string;
+
+  updateForm = new FormGroup({
+    nombre: new FormControl('',[Validators.required, Validators.minLength(2), Validators.maxLength(20)]),
+    apellido: new FormControl('',[Validators.required, Validators.minLength(2), Validators.maxLength(20)]),
+    correo: new FormControl('',[Validators.required, Validators.email]),
+    celular: new FormControl('',[Validators.required, Validators.min(900000000), Validators.max(999999999)])
+  });
+
+  getErrorMessage(controlName: string) {
+    const control = this.updateForm.get(controlName);
+    if (control?.hasError('required')) {
+      return 'El campo es requerido.';
+    }
+    if (control?.hasError('minlength')) {
+      return `El campo debe tener al menos ${control?.errors?.['minlength']?.requiredLength} caracteres.`;
+    }
+    if (control?.hasError('maxlength')) {
+      return `El campo no puede tener más de ${control?.errors?.['maxlength']?.requiredLength} caracteres.`;
+    }
+    if (control?.hasError('pattern')) {
+      return 'El campo solo puede contener letras y números.';
+    }
+    if (control?.hasError('email')) {
+      return 'Ingrese un correo válido.';
+    }
+    if (control?.hasError('min')) {
+      return 'Ingrese un número válido.';
+    }
+    if (control?.hasError('max')) {
+      return 'Ingrese un número válido.';
+    }
+    return '';
+  }
 
   constructor( private router: Router, 
     public alertController: AlertController, 
-    public fb:FormBuilder, 
-    private http: HttpClient) { }
+    private http: HttpClient,
+    private api: ApiService) { }
 
-
-  getUserData() {
-    const loginResponseString = localStorage.getItem('loginResponse');
-    if (loginResponseString) {
-      const loginResponse = JSON.parse(loginResponseString);
-      if (loginResponse.success) {
-        const data = loginResponse.data.usuario;
-        if (data) {
-          const headers = new HttpHeaders().set('Authorization', 'Token ' + localStorage.getItem('token'));
-          this.http.get('https://luyinq.pythonanywhere.com/usuario/' + localStorage.getItem('rut') + '/', { headers })
-            .subscribe((response: any) => {
-              if (response.success) {
-                const userData = response.data;
-                this.registerForm.setValue({
-                  rut: userData.rut,
-                  nombre: userData.nombre,
-                  apellido: userData.apellido,
-                  password: '',
-                  confirmPassword: '',
-                  email: userData.correo,
-                  celular: userData.celular
-                });
-              } else {
-                this.presentAlert("Error", response.message);
-              }
-            }, (error: any) => {
-              console.error(error);
-              this.presentAlert("Error", error.error.message);
-            });
-        }
+  ngOnInit() { 
+    this.router.events.subscribe(event => {
+      if (event instanceof NavigationEnd) {
+        // Reset the variables when navigating to another page
+        this.nombrePutError = '';
+        this.apellidoPutError = '';
+        this.correoPutError = '';
+        this.celularPutError = '';
       }
-    }
+    });
+  }
+  
+  ionViewWillEnter() {
+    this.api.getUserData(this.updateForm)
   }
 
-  ngOnInit() { this.registerForm = this.fb.group({
-    rut: new FormControl('', [Validators.required, Validators.minLength(8), Validators.maxLength(9), Validators.pattern('[0-9A-Za-z]+'), this.rutValidator()]),
-    nombre: new FormControl('',[Validators.required, Validators.minLength(2), Validators.maxLength(20)]),
-    apellido: new FormControl('',[Validators.required, Validators.minLength(2), Validators.maxLength(20)]),
-    password: new FormControl('', [Validators.required, Validators.minLength(6), Validators.maxLength(20),]),
-    confirmPassword: new FormControl('', [Validators.required, Validators.minLength(6), Validators.maxLength(20),]),
-    email: new FormControl('',[Validators.required]),
-    celular: new FormControl('',[Validators.required])
-  });
-
- }
-  
   submitForm() {
-    if (this.registerForm && this.registerForm.valid) {
-      const rutControl = this.registerForm.get('rut');
-      const nomControl = this.registerForm.get('nombre');
-      const apeControl = this.registerForm.get('apellido');
-      const passControl = this.registerForm.get('password');
-      const emailControl = this.registerForm.get('email');
-      const celControl = this.registerForm.get('celular');
-      if (rutControl && nomControl && apeControl && emailControl && celControl ) {
-        const rut = rutControl.value;
-        const nombre = nomControl.value;
-        const apellido = apeControl.value;
-        const email = emailControl.value;
-        const celular = celControl.value;
-      }
-    }
-  }
+    this.nombrePutError = '';
+    this.apellidoPutError = '';
+    this.correoPutError = '';
+    this.celularPutError = '';
+    if (this.updateForm && this.updateForm.valid) {
+      const url = `https://luyinq.pythonanywhere.com/usuario/` + localStorage.getItem('rut') + '/';
+      const headers = new HttpHeaders({
+        'Authorization': 'Token ' + localStorage.getItem('token')
+      });
+      const data = {
+        nombre: this.updateForm.value.nombre,
+        apellido: this.updateForm.value.apellido,
+        correo: this.updateForm.value.correo,
+        celular: this.updateForm.value.celular
+      };
+      this.http.put(url, data, { headers }).subscribe((response: any) => {
+        if (response.success) {
+          this.presentAlert("Felicitaciones", response.message);
+          this.router.navigate(['/home']);
+        } else {
+          this.presentAlert("Error", response.message);
+        }
+      }, (error: any) => {
+        if (error.error.message){
+          this.presentAlert("Error", error.error.message);
+        }else{
+          this.presentAlert("Error", "No se ha realizado el cambio");
+        }
+        if (error.error.error.details) {
+          console.log(error.error.error.details)
+          if (error.error.error.details.nombre) {
+            this.nombrePutError = error.error.error.details.nombre[0];
+          }
+          if (error.error.error.details.apellido){
+            this.apellidoPutError = error.error.error.details.apellido[0];
+          }
+          if (error.error.error.details.correo){
+            this.correoPutError = error.error.error.details.correo[0];
+          }
+          if (error.error.error.details.celular){
+            this.celularPutError = error.error.error.details.celular[0];
+            console.log(this.celularPutError)
+          }
 
-  rutValidator(): ValidatorFn {
-    return (control: AbstractControl): {[key: string]: any} | null => {
-      const rut = control.value;
-      if (!rut) {
-        return null;
-      }
-      const isValid = this.validarRut(rut);
-      return isValid ? null : { 'invalidRut': true };
-    };
-  }
-
-  validarRut(rut: string): boolean {
-    rut = rut.toUpperCase();
-    rut = rut.replace("-", "");
-    rut = rut.replace(".", "");
-    const aux = rut.slice(0,-1);
-    let dv: string = rut.slice(-1);
-  
-    if (dv === 'K') {
-      dv = '10';
-    } else if (!dv.match(/^\d+$/)) {
-      return false;
+        }
+      });
     }
-  
-    if (!aux.match(/^\d+$/)) {
-      return false;
-    }
-  
-    const revertido = Array.from(aux, Number).reverse();
-    const factors = [2, 3, 4, 5, 6, 7];
-    let s = 0;
-    let f = 0;
-  
-    for (let i = 0; i < revertido.length; i++) {
-      f = factors[i % factors.length];
-      s += revertido[i] * f;
-    }
-  
-    let res = (11 - (s % 11)).toString();
-    
-    if (res === '11') {
-      res = '0';
-    }
-  
-    if (res === dv) {
-      return true;
-    } else {
-      return false;
-    }
-  }
-  guardar(){
-    this.presentAlert('Guardar Cambios','Cambios Guardardados');
-    this.router.navigate(['/ver-perfil']);
   }
 
   async presentAlert(titulo: string, msg: string) {

@@ -22,6 +22,12 @@ export class RegistroPage implements OnInit {
   /*VALIDAR FORM REGISTRO*/
   registerForm: FormGroup;
   show = false;
+  rutPostError : string;
+  nombrePostError: string;
+  apellidoPostError: string;
+  correoPostError: string;
+  celularPostError: string;
+  contrasenaPostError: string;
 
   getErrorMessage(controlName: string) {
     const control = this.registerForm.get(controlName);
@@ -35,7 +41,7 @@ export class RegistroPage implements OnInit {
       return `El campo no puede tener más de ${control?.errors?.['maxlength']?.requiredLength} caracteres.`;
     }
     if (control?.hasError('pattern')) {
-      return 'El campo solo puede contener letras y números.';
+      return 'El campo debe contener una letra mayúscula, minúscula y número.';
     }
     if (control?.hasError('invalidRut')) {
       return 'Debe ingresar un rut real.';
@@ -115,7 +121,24 @@ export class RegistroPage implements OnInit {
               this.presentAlert("Error", response.message);
             }
           }, (error: any) => {
-            console.error(error);
+            if (error.error.details.rut) {
+              this.rutPostError = error.error.details.rut[0];
+            }
+            if (error.error.details.nombre){
+              this.nombrePostError = error.error.details.nombre[0];
+            }
+            if (error.error.details.apellido){
+              this.apellidoPostError = error.error.details.apellido[0];
+            }
+            if (error.error.details.contrasena){
+              this.contrasenaPostError = error.error.details.contrasena[0];
+            }
+            if (error.error.details.correo){
+              this.correoPostError = error.error.details.correo[0];
+            }
+            if (error.error.details.celular){
+              this.celularPostError = error.error.details.celular[0];
+            }
             this.presentAlert("Error", "Existen errores en los campos rellenados, intente de nuevo.");
           });
       }

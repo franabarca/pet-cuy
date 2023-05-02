@@ -37,6 +37,13 @@
 </ion-menu-toggle>
 
 <ion-menu-toggle>
+  <ion-item [routerLink]="['/editar-perfil']" detail="true">
+  <ion-label>Cambiar contraseña</ion-label>
+  <ion-icon slot="start" name="create-outline"></ion-icon>
+</ion-item>
+</ion-menu-toggle>
+
+<ion-menu-toggle>
   <ion-item (click)="logout()" detail="true">
   <ion-label>Cerrar Sesion</ion-label>
   <ion-icon slot="start" name="return-up-back-outline"></ion-icon>
