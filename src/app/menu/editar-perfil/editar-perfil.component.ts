@@ -107,7 +107,6 @@ export class EditarPerfilComponent  implements OnInit {
           localStorage.setItem('celular', data.celular)
           this.router.navigate(['/home']);
         } else {
-          console.log("ta malo")
           this.presentAlert("Error", response.message);
         }
       }, (error: any) => {
