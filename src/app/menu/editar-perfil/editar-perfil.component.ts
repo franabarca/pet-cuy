@@ -87,16 +87,27 @@ export class EditarPerfilComponent  implements OnInit {
         'Authorization': 'Token ' + localStorage.getItem('token')
       });
       const data = {
-        nombre: this.updateForm.value.nombre,
-        apellido: this.updateForm.value.apellido,
-        correo: this.updateForm.value.correo,
-        celular: this.updateForm.value.celular
+        nombre: this.updateForm.value.nombre as string,
+        apellido: this.updateForm.value.apellido as string,
+        correo: this.updateForm.value.correo as string,
+        celular: this.updateForm.value.celular as string
       };
+      // Verificar si el número de celular ha cambiado
+      if (localStorage.getItem("celular") == data.celular && localStorage.getItem("nombre")  == this.updateForm.value.nombre && localStorage.getItem("apellido")  == this.updateForm.value.apellido &&
+        localStorage.getItem("correo")  == this.updateForm.value.correo) {
+        this.presentAlert("Error", "No se ha actualizado ningún campo.");
+        return; // Salir de la función sin enviar la solicitud PUT
+      }
       this.http.put(url, data, { headers }).subscribe((response: any) => {
         if (response.success) {
           this.presentAlert("Felicitaciones", response.message);
+          localStorage.setItem('correo', data.correo)
+          localStorage.setItem('nombre', data.nombre)
+          localStorage.setItem('apellido', data.apellido)
+          localStorage.setItem('celular', data.celular)
           this.router.navigate(['/home']);
         } else {
+          console.log("ta malo")
           this.presentAlert("Error", response.message);
         }
       }, (error: any) => {
@@ -120,10 +131,9 @@ export class EditarPerfilComponent  implements OnInit {
             this.celularPutError = error.error.error.details.celular[0];
             console.log(this.celularPutError)
           }
-
         }
       });
-    }
+    } 
   }
 
   async presentAlert(titulo: string, msg: string) {

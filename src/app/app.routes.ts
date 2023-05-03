@@ -5,6 +5,7 @@ import { EncontreMascotaComponent } from './home/encontre-mascota/encontre-masco
 import { PerdiMascotaComponent } from './home/perdi-mascota/perdi-mascota.component';
 import { AuthGuardGuard } from './auth-guard.guard';
 import { LoggedInGuard } from './logged-in.guard';
+import { CambiarContrasenaComponent } from './menu/cambiar-contrasena/cambiar-contrasena.component';
 
 
 export const routes: Routes = [
@@ -39,6 +40,9 @@ export const routes: Routes = [
   },
   {
     path: 'ver-perfil', component: VerPerfilComponent, canActivate: [AuthGuardGuard]
+  },
+  {
+    path: 'cambiar-contrasena', component: CambiarContrasenaComponent, canActivate: [AuthGuardGuard]
   },
   {
     path: '',

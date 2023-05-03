@@ -28,6 +28,16 @@ export class RegistroPage implements OnInit {
   correoPostError: string;
   celularPostError: string;
   contrasenaPostError: string;
+  showPassword1: boolean = false;
+  showPassword2: boolean = false;
+
+  togglePasswordVisibility1() {
+    this.showPassword1 = !this.showPassword1;
+  }
+
+  togglePasswordVisibility2() {
+    this.showPassword2 = !this.showPassword2;
+  }
 
   getErrorMessage(controlName: string) {
     const control = this.registerForm.get(controlName);
@@ -47,7 +57,7 @@ export class RegistroPage implements OnInit {
       return 'Debe ingresar un rut real.';
     }
     if (control?.hasError('not_matching')) {
-      return 'Las contraseñas deben coincidir!';
+      return 'Las contraseñas deben coincidir.';
     }
     return '';
   }
