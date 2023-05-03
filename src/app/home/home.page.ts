@@ -23,7 +23,9 @@ export class HomePage implements AfterViewInit {
   @ViewChild('mapElement', { static: false }) mapElement!: { nativeElement: any; };
   mapOptions = {
     center: { lat: 0, lng: 0 },
-    zoom: 8,
+    zoom: 50,
+    fullscreenControl: true,
+    mapTypeControl: false 
   };
 
   address: any;
@@ -36,6 +38,7 @@ export class HomePage implements AfterViewInit {
   loadMap(){
     console.log('LLEGUE AQUI')
     this.map = new google.maps.Map(this.mapElement.nativeElement, this.mapOptions);
+    this.map.setZoom(15);
     const marker = new google.maps.Marker({
       position: this.mapOptions.center,
       map: this.map,
@@ -50,7 +53,6 @@ export class HomePage implements AfterViewInit {
       if (status === 'OK') {
         if (results[0]) {
           this.address = results[0].formatted_address;
-          this.map.setZoom(5);
           const marker = new google.maps.Marker({
             position: currentPosition,
             map: this.map,
