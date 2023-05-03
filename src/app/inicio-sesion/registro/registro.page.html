@@ -62,7 +62,8 @@
           </ion-text>
           <ion-item lines="full" *ngIf="registerForm">
             <ion-label position="floating">Contraseña</ion-label>
-            <ion-input type="{{(show === false)?'password':'text'}}" name="password" placeholder="Ingrese su contraseña" maxlength="20" formControlName="password" ></ion-input>
+            <ion-input type="{{ showPassword1 ? 'text' : 'password' }}" name="password" placeholder="Ingrese su contraseña" maxlength="20" formControlName="password" ></ion-input>
+            <ion-icon name="{{ showPassword1 ? 'eye-off' : 'eye' }}" slot="end" (click)="togglePasswordVisibility1()"></ion-icon>
           </ion-item>
           <ion-text color="danger" *ngIf="registerForm.get('password')?.invalid && registerForm.get('password')?.touched">
             <div>{{ getErrorMessage('password') }}</div>
@@ -72,7 +73,8 @@
           </ion-text>
           <ion-item lines="full" *ngIf="registerForm">
             <ion-label position="floating">Confirme su Contraseña</ion-label>
-            <ion-input type="{{(show === false)?'password':'text'}}" name="confirmPassword" placeholder="Confirme su contraseña" formControlName="confirmPassword"></ion-input>
+            <ion-input type="{{ showPassword2 ? 'text' : 'password' }}" name="confirmPassword" placeholder="Confirme su contraseña" formControlName="confirmPassword"></ion-input>
+            <ion-icon name="{{ showPassword2 ? 'eye-off' : 'eye' }}" slot="end" (click)="togglePasswordVisibility2()"></ion-icon>
           </ion-item>
           <ion-text color="danger" *ngIf="registerForm.get('confirmPassword')?.invalid && registerForm.get('confirmPassword')?.touched || registerForm.get('confirmPassword')?.hasError('not_matching')">
             <div>{{ getErrorMessage('confirmPassword') }}</div>
