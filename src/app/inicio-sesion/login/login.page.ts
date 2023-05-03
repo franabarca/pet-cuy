@@ -17,6 +17,12 @@ import { AppComponent } from 'app/app.component';
 })
 export class LoginPage implements OnInit {
 
+  showPassword: boolean = false;
+
+  togglePasswordVisibility() {
+    this.showPassword = !this.showPassword;
+  }
+
   forgotForm = new FormGroup({
     rut: new FormControl('', [Validators.required, Validators.minLength(8), Validators.maxLength(9), Validators.pattern('[0-9A-Za-z]+'), this.rutValidator()]),
     password: new FormControl('')
