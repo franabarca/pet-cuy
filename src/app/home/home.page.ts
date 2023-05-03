@@ -50,7 +50,7 @@ export class HomePage implements AfterViewInit {
       if (status === 'OK') {
         if (results[0]) {
           this.address = results[0].formatted_address;
-          this.map.setZoom(5);
+          this.map.setZoom(17);
           const marker = new google.maps.Marker({
             position: currentPosition,
             map: this.map,
