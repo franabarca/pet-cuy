@@ -33,6 +33,7 @@ import { Geolocation } from '@ionic-native/geolocation/ngx';
 export class AppComponent implements OnInit {
   localStorage: Storage;
   showMenu: boolean = false;
+  showAdminOptions: boolean = false;
   nombre: string;
 
   constructor(private router: Router, private api: ApiService)
@@ -41,6 +42,9 @@ export class AppComponent implements OnInit {
   ngOnInit() {
     this.localStorage = window.localStorage;
     this.showMenu = !!this.localStorage.getItem('rut'); // Asigna el valor inicial de la variable showMenu
+  }
+  toggleAdminOptions() {
+    this.showAdminOptions = !this.showAdminOptions;
   }
 
   logout() {

@@ -1,33 +1,48 @@
-<div class="container my-5">
-  <h1 class="mb-4">Formulario Mascota Perdida</h1>
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Formulario Mascota Perdida</ion-title>
+  </ion-toolbar>
+</ion-header>
 
-  <form >
-    <div class="mb-3">
-      <label for="petType" class="form-label">Tipo Mascota</label>
-      <input type="text"  name="petType" class="form-control" id="petType">
-    </div>
+<ion-content>
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Formulario Mascota Perdida</ion-card-title>
+    </ion-card-header>
 
-    <div class="mb-3">
-      <label for="petBreed" class="form-label">Raza Mascota</label>
-      <input type="text"  name="petBreed" class="form-control" id="petBreed">
-    </div>
+    <ion-card-content>
+      <ion-list>
+        <ion-item>
+          <ion-label position="floating">Tipo Mascota</ion-label>
+          <ion-input type="text" name="petType" ></ion-input>
+        </ion-item>
 
-    <div class="mb-3">
-      <label for="petColor" class="form-label">Color Mascota</label>
-      <input type="text"  name="petColor" class="form-control" id="petColor">
-    </div>
+        <ion-item>
+          <ion-label position="floating">Raza Mascota</ion-label>
+          <ion-input type="text" name="petBreed" ></ion-input>
+        </ion-item>
 
-    <div class="mb-3">
-      <label for="petDescription" class="form-label">Descripcion Mascota</label>
-      <textarea class="form-control"  name="petDescription" id="petDescription" rows="3"></textarea>
-    </div>
+        <ion-item>
+          <ion-label position="floating">Color Mascota</ion-label>
+          <ion-input type="text" name="petColor" ></ion-input>
+        </ion-item>
 
-    <div class="mb-3">
-      <label for="petImage" class="form-label">Imagen Mascota</label>
-      <input type="file"  name="petImage" class="form-control-file" id="petImage">
-    </div>
+        <ion-item>
+          <ion-label position="floating">Descripcion Mascota</ion-label>
+          <ion-textarea name="petDescription"  rows="3"></ion-textarea>
+        </ion-item>
 
-    <button type="submit" class="btn btn-primary" (click)="ingresar()">Ingresar</button>
-  </form>
-</div>
+        <ion-title>
+          <ion-label position="floating">Fotos</ion-label>
+          
+        </ion-title>
+        <ion-item>
+        <ion-input type="file" name="petImage" ></ion-input>
+      </ion-item>
+      </ion-list>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-button expand="full" (click)="ingresar()">Ingresar</ion-button>
+</ion-content>
 
