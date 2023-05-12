@@ -43,6 +43,33 @@
 </ion-item>
 </ion-menu-toggle>
 
+<ion-item (click)="toggleAdminOptions()" detail="true">
+  <ion-label>Administrador</ion-label>
+  <ion-icon slot="start" name="person-outline"></ion-icon>
+</ion-item>
+
+<div *ngIf="showAdminOptions">
+  <ion-menu-toggle>
+    <ion-item>
+      <ion-label>Subitem 1</ion-label>
+    </ion-item>
+  </ion-menu-toggle>
+
+  <ion-menu-toggle>
+    <ion-item>
+      <ion-label>Subitem 2</ion-label>
+    </ion-item>
+  </ion-menu-toggle>
+
+  <ion-menu-toggle>
+    <ion-item>
+      <ion-label>Subitem 3</ion-label>
+    </ion-item>
+  </ion-menu-toggle>
+</div>
+
+
+
 <ion-menu-toggle>
   <ion-item (click)="logout()" detail="true">
   <ion-label>Cerrar Sesion</ion-label>
