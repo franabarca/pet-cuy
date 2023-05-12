@@ -11,6 +11,7 @@ import { Router } from '@angular/router';
 import { ApiService } from './shared/api.service';
 import { Geolocation } from '@ionic-native/geolocation/ngx';
 
+
 @Component({
   selector: 'app-root',
   templateUrl: 'app.component.html',
@@ -26,7 +27,7 @@ import { Geolocation } from '@ionic-native/geolocation/ngx';
     InicioSesionModule,
     HomeModule,
     CommonModule,
-    HttpClientModule
+    HttpClientModule,
   ],
 })
 

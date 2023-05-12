@@ -1,13 +1,16 @@
-import { Component, ViewChild, AfterViewInit } from '@angular/core';
+import { Component, ViewChild, AfterViewInit, Type } from '@angular/core';
 import { IonicModule } from '@ionic/angular';
 import { RouterLink } from '@angular/router';
 import { AppComponent } from 'app/app.component';
 import { Geolocation, Geoposition } from '@ionic-native/geolocation/ngx';
 
+
 declare var google: { maps: {
   Geocoder: any;
   Marker: any; Map: new (arg0: any, arg1: { center: { lat: number; lng: number; }; zoom: number; }) => any; 
 }; };
+
+
 
 @Component({
   selector: 'app-home',
@@ -19,16 +22,98 @@ declare var google: { maps: {
   RouterLink],
 })
 export class HomePage implements AfterViewInit {
+  
   map: any;
+
   @ViewChild('mapElement', { static: false }) mapElement!: { nativeElement: any; };
+
   mapOptions = {
     center: { lat: 0, lng: 0 },
     zoom: 50,
     fullscreenControl: true,
-    mapTypeControl: false 
+    mapTypeControl: false,
+    styles: [
+      {
+        featureType: 'water',
+        elementType: 'geometry.fill',
+        stylers: [
+          {
+            color: '#73C8FA'
+          }
+        ]
+      },
+      {
+        featureType: 'landscape',
+        elementType: 'geometry.fill',
+        stylers: [
+          {
+            color: '#F2F2F2'
+          }
+        ]
+      },
+      {
+        featureType: 'road.highway',
+        elementType: 'geometry.stroke',
+        stylers: [
+          {
+            color: '#85A2BF'
+          },
+          {
+            weight: 1.5
+          }
+        ]
+      },
+      {
+        featureType: 'road.highway',
+        elementType: 'geometry.fill',
+        stylers: [
+          {
+            color: '#D8E6F3'
+          }
+        ]
+      },
+      {
+        featureType: 'road.local',
+        elementType: 'geometry.fill',
+        stylers: [
+          {
+            color: '#9EB6C8'
+          }
+        ]
+      },
+      {
+        featureType: 'poi',
+        elementType: 'geometry.fill',
+        stylers: [
+          {
+            color: '#F2F2F2',
+            visibility: "off"
+          }
+        ]
+      },
+      {
+        featureType: 'poi.park',
+        elementType: 'geometry.fill',
+        stylers: [
+          {
+            color: '#D9D9D9'
+          }
+        ]
+      },
+      {
+        featureType: 'transit',
+        elementType: 'geometry.fill',
+        stylers: [
+          {
+            color: '#F2F2F2'
+          }
+        ]
+      }
+    ] 
   };
 
   address: any;
+  iconImage = '/assets/imagenes/ubicacionicono.png'; 
 
   constructor(private main: AppComponent, private geolocation: Geolocation) {
     const nombre = localStorage.getItem('nombre');
@@ -42,7 +127,7 @@ export class HomePage implements AfterViewInit {
     const marker = new google.maps.Marker({
       position: this.mapOptions.center,
       map: this.map,
-      title: 'Ubicación Actual',
+      icon: this.iconImage,
     });
     this.geocodeLatLng(this.mapOptions.center);
   }
@@ -53,13 +138,11 @@ export class HomePage implements AfterViewInit {
       if (status === 'OK') {
         if (results[0]) {
           this.address = results[0].formatted_address;
-<<<<<<< HEAD
           this.map.setZoom(17);
-=======
->>>>>>> master
           const marker = new google.maps.Marker({
             position: currentPosition,
             map: this.map,
+            icon: this.iconImage
           });
         } else {
           window.alert("No results found");
@@ -80,3 +163,6 @@ export class HomePage implements AfterViewInit {
     });
   }
 }
+
+
+

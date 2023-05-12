@@ -13,6 +13,7 @@
   },
   "private": true,
   "dependencies": {
+    "@agm/core": "^3.0.0-beta.0",
     "@angular/common": "^15.0.0",
     "@angular/core": "^15.0.0",
     "@angular/forms": "^15.0.0",
@@ -27,6 +28,7 @@
     "@googlemaps/js-api-loader": "^1.15.1",
     "@ionic-native/geolocation": "^5.36.0",
     "@ionic/angular": "^7.0.0",
+    "@types/googlemaps": "^3.43.3",
     "ionicons": "^7.0.0",
     "rxjs": "~7.5.0",
     "tslib": "^2.3.0",

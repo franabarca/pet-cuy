@@ -4,7 +4,7 @@ import { PerdiMascotaComponent } from './perdi-mascota/perdi-mascota.component';
 import { EncontreMascotaComponent } from './encontre-mascota/encontre-mascota.component';
 import { RouterLink } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
-import { Geolocation } from '@ionic-native/geolocation/ngx'
+import { Geolocation } from '@ionic-native/geolocation/ngx';
 
 
 
@@ -17,10 +17,12 @@ import { Geolocation } from '@ionic-native/geolocation/ngx'
   imports: [
     CommonModule,
     RouterLink,
-    IonicModule
+    IonicModule,
   ],
   providers: [
     Geolocation
   ]
 })
 export class HomeModule { }
+
+

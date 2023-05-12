@@ -1,0 +1,36 @@
+.map {
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 0;
+  }
+  
+  ion-card {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: 0;
+    height: 30%;
+    z-index: 1;
+    background-color: white;
+    box-shadow: 0 -5px 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  #titulo {
+    text-align: center;
+    margin-top: 16px;
+  }
+  
+  ion-footer {
+    display: flex;
+    justify-content: space-evenly;
+    margin-top: auto;
+    background-color: white;
+  }
+  
+  ion-button {
+    margin-bottom: 8px;
+  }
