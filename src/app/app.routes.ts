@@ -30,6 +30,11 @@ export const routes: Routes = [
     canActivate: [LoggedInGuard]
   },
   {
+    path: 'modalpopup',
+    loadComponent: () => import('./modalpopup/modalpopup.page').then( m => m.ModalpopupPage),
+    canActivate: [LoggedInGuard]
+  },
+  {
     path: 'perdi-mascota', component: PerdiMascotaComponent, canActivate: [AuthGuardGuard]
   },
   {
@@ -55,6 +60,8 @@ export const routes: Routes = [
     redirectTo: 'login',
     pathMatch: 'full',
   },
+  
+
   
 
  
