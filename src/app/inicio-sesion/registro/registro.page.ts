@@ -2,7 +2,7 @@ import { Component, OnInit, ContentChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { AbstractControl, EmailValidator, FormBuilder, FormControl, 
 FormGroup, FormsModule, ValidatorFn, Validators, ReactiveFormsModule, AsyncValidatorFn, ValidationErrors } from '@angular/forms';
-import { IonicModule, AlertController, IonInput } from '@ionic/angular';
+import { IonicModule, AlertController, IonInput, ActionSheetController } from '@ionic/angular';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { Observable, delay, of } from 'rxjs';
@@ -62,7 +62,7 @@ export class RegistroPage implements OnInit {
     return '';
   }
 
-  constructor( private router: Router, public alertController: AlertController, public fb:FormBuilder, private http: HttpClient) {}
+  constructor( private router: Router, public alertController: AlertController, public fb:FormBuilder, private http: HttpClient, private actionsheet: ActionSheetController) {}
 
   ngOnInit() {
     this.registerForm = this.fb.group({
@@ -72,7 +72,8 @@ export class RegistroPage implements OnInit {
       password: new FormControl('', [Validators.required, Validators.minLength(6), Validators.maxLength(20), Validators.pattern('(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9]).{6,}')]),
       confirmPassword: new FormControl('', [Validators.required, Validators.minLength(6), Validators.maxLength(20),]),
       email: new FormControl('',[Validators.required, Validators.pattern("^[a-zA-Z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$")]),
-      celular: new FormControl('',[Validators.required, Validators.min(900000000), Validators.max(999999999)])
+      celular: new FormControl('',[Validators.required, Validators.min(900000000), Validators.max(999999999)]),
+      foto: new FormControl('', [Validators.required])
   },
   {
     validator: this.matchingPasswords
@@ -81,6 +82,24 @@ export class RegistroPage implements OnInit {
 
   showPassword(){
     this.show = !this.show;
+  }
+
+  async selectImageOptions(){
+    const actionsheet = await this.actionsheet.create({
+      header: 'Selecciona una imagen',
+      buttons: [{
+        text: 'Galería',
+        handler: ()=>{
+          console.log('Imagen Seleccionada desde Galería')
+        }
+      },
+      {
+        text: 'Cancelar',
+        role: 'cancel'
+      }
+    ]
+    });
+    await actionsheet.present();
   }
 
   getData(){

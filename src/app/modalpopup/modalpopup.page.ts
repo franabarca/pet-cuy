@@ -1,10 +1,10 @@
 import { Component, ViewChild, AfterViewInit } from '@angular/core';
-import { IonicModule } from '@ionic/angular';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
-import { AppComponent } from 'app/app.component';
-import { Geolocation, Geoposition } from '@ionic-native/geolocation/ngx';
-import { ModalpopupPage} from '../modalpopup/modalpopup.page';
+import { IonicModule } from '@ionic/angular';
 import { ModalController } from '@ionic/angular';
+import { Geolocation, Geoposition } from '@ionic-native/geolocation/ngx';
 
 
 declare var google: { maps: {
@@ -13,20 +13,14 @@ declare var google: { maps: {
   Marker: any; Map: new (arg0: any, arg1: { center: { lat: number; lng: number; }; zoom: number; }) => any; 
 }; };
 
-
-
 @Component({
-  selector: 'app-home',
-  templateUrl: 'home.page.html',
-  styleUrls: ['home.page.scss'],
+  selector: 'app-modalpopup',
+  templateUrl: './modalpopup.page.html',
+  styleUrls: ['./modalpopup.page.scss'],
   standalone: true,
-  imports: [
-    IonicModule,
-    RouterLink,
-    ModalpopupPage,
-  ],
+  imports: [IonicModule, CommonModule, FormsModule]
 })
-export class HomePage implements AfterViewInit {
+export class ModalpopupPage implements AfterViewInit {
 
   map: any;
   marker: any;
@@ -119,21 +113,13 @@ export class HomePage implements AfterViewInit {
   };
 
   address: any;
-  iconImage = '/assets/imagenes/ubicacionicono.png'; 
+  iconImage = '/assets/imagenes/ubicacionicono.png';
 
-  constructor(private main: AppComponent, private geolocation: Geolocation, private modalController: ModalController) {
+  constructor(private modalController: ModalController, private geolocation: Geolocation) {
     const nombre = localStorage.getItem('nombre');
-    this.main.nombre = nombre !== null ? nombre : '';
-  }
+   }
 
-  openModal(){
-    this.modalController.create({component:ModalpopupPage}).then((modalElement)=>{
-      modalElement.present();
-    });
-  }
-  
-  loadMap(){
-    console.log('LLEGUE AQUI')
+   loadMap(){
     this.map = new google.maps.Map(this.mapElement.nativeElement, this.mapOptions);
     this.map.setZoom(15);
     const marker = new google.maps.Marker({
@@ -142,14 +128,14 @@ export class HomePage implements AfterViewInit {
       icon: this.iconImage,
       draggable: true // hace el marcador draggable
     });
-    
-    
+
     marker.addListener('dragend', (event: any) => {
       console.log('latitud: ', event.latLng.lat());
       console.log('longitud: ', event.latLng.lng());
     });
 
     this.geocodeLatLng(this.mapOptions.center);
+
   }
 
   geocodeLatLng(currentPosition: { lat: number; lng: number; }) {
@@ -178,7 +164,12 @@ export class HomePage implements AfterViewInit {
       console.log('ERROR TRATANDO DE OBTENER LA GEOLOCALIZACION', error)
     });
   }
+
+  ngOnInit() {
+  }
+
+  CloseModal(){
+    this.modalController.dismiss();
+  }
+
 }
-
-
-

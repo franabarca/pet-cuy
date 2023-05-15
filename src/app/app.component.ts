@@ -10,6 +10,8 @@ import { HttpClientModule } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { ApiService } from './shared/api.service';
 import { Geolocation } from '@ionic-native/geolocation/ngx';
+import { ModalpopupPage} from '../app/modalpopup/modalpopup.page';
+
 
 @Component({
   selector: 'app-root',
@@ -26,7 +28,8 @@ import { Geolocation } from '@ionic-native/geolocation/ngx';
     InicioSesionModule,
     HomeModule,
     CommonModule,
-    HttpClientModule
+    HttpClientModule,
+    ModalpopupPage
   ],
 })
 
