@@ -31,6 +31,7 @@ export class ModalpopupPage implements AfterViewInit {
     center: { lat: 0, lng: 0 },
     zoom: 50,
     fullscreenControl: true,
+    streetViewControl: false,
     mapTypeControl: false,
     styles: [
       {
