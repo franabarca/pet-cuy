@@ -38,6 +38,7 @@ export class HomePage implements AfterViewInit {
     zoom: 50,
     fullscreenControl: true,
     mapTypeControl: false,
+    streetViewControl: false,
     styles: [
       {
         featureType: 'water',
