@@ -66,7 +66,7 @@ export class RegistroPage implements OnInit {
 
   constructor( private router: Router, public alertController: AlertController, 
     public fb:FormBuilder, private http: HttpClient, private actionsheet: ActionSheetController,
-    private webview: WebView, private cameraoptions: CameraOptions, private camera: Camera) {}
+    private webview: WebView) {}
 
   ngOnInit() {
     this.registerForm = this.fb.group({
