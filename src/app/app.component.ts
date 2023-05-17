@@ -11,13 +11,13 @@ import { Router } from '@angular/router';
 import { ApiService } from './shared/api.service';
 import { Geolocation } from '@ionic-native/geolocation/ngx';
 import { ModalpopupPage} from '../app/modalpopup/modalpopup.page';
-
+import { WebView } from '@ionic-native/ionic-webview/ngx';
 
 @Component({
   selector: 'app-root',
   templateUrl: 'app.component.html',
   styleUrls: ['app.component.scss'],
-  providers: [ApiService, Geolocation],
+  providers: [ApiService, Geolocation, WebView],
   standalone: true,
   imports: [
     IonicModule, 

@@ -5,6 +5,8 @@ FormGroup, FormsModule, ValidatorFn, Validators, ReactiveFormsModule, AsyncValid
 import { IonicModule, AlertController, IonInput, ActionSheetController } from '@ionic/angular';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { Router } from '@angular/router';
+import { WebView } from '@ionic-native/ionic-webview/ngx';
+import { Camera, CameraOptions, CameraResultType } from '@capacitor/camera';
 import { Observable, delay, of } from 'rxjs';
 import { request } from 'http';
 
@@ -62,7 +64,9 @@ export class RegistroPage implements OnInit {
     return '';
   }
 
-  constructor( private router: Router, public alertController: AlertController, public fb:FormBuilder, private http: HttpClient, private actionsheet: ActionSheetController) {}
+  constructor( private router: Router, public alertController: AlertController, 
+    public fb:FormBuilder, private http: HttpClient, private actionsheet: ActionSheetController,
+    private webview: WebView, private cameraoptions: CameraOptions, private camera: Camera) {}
 
   ngOnInit() {
     this.registerForm = this.fb.group({
